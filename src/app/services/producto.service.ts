@@ -1,0 +1,70 @@
+import { Injectable } from '@angular/core';
+import { Producto } from '../models/producto';
+import { Calification } from '../models/calification';
+import { Category } from '../models/category';
+import { CategoryService } from './category.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductoService {
+
+  private productos: Producto[] = [];
+
+  private cat: Category[] = [];
+
+  constructor(private cate: CategoryService) { 
+    
+    this.cat = cate.getCatego();
+    this.productos.push({
+      sku: '1',
+      name: 'Ojo de Dios Shaquira CH',
+      description: 'Ojo de Dios hecho con shaquiras de colores de tamaño chico',
+      price: 1200,
+      category: this.cat[0],
+      //calification:
+      //discant:
+      stock: 10,
+      photo: 'https://picsum.photos/200'
+    },{
+      sku: '2',
+      name: 'Mandala Spiderman XL',
+      description: 'Mandala con diseño del fantastico hombre araña, hecho con siete hilos de la mejor calidad, tamaño extra grande',
+      price: 2500,
+      category: this.cat[1],
+      //calification:
+      stock: 3,
+      photo: 'https://picsum.photos/200'
+    },{
+      sku: '2',
+      name: 'Atrapa sueños Trailero',
+      description: 'Atrapa sueños con diseño colorido, resalta sus hermosos colores bajo los influjos de sustancias psicoactivas.',
+      price: 999,
+      category: this.cat[0],
+      //calification:
+      stock: 18,
+      photo: 'https://picsum.photos/200'
+    });
+  }
+
+  public getProductos(): Producto[] {
+    return this.productos;    
+  }
+
+  public getProductoFiltradoPorCategoria(idCategoriaOk: string): Producto[] {
+    return this.productos.filter( prod => {prod.category?.idCategoryOK == idCategoriaOk});
+  }
+
+  public deleteProducto(pos: number) {
+    this.productos.splice(pos,1);
+  }
+
+  public uploadProduct(prod:Producto, pos:number) {
+    this.productos[pos] = prod;
+  }
+
+  public addProduct(prod:Producto) {
+    this.productos.push(prod);
+  }
+
+}
