@@ -6,7 +6,7 @@ export interface Producto {
     name: string;
     description?: string
     price: number;
-    category?: Category;
+    category: Category;
     calification?: Calification[];
     stock: number;
     photo?: string;

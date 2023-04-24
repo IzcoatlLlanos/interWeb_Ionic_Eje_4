@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Administrar Prductos
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -15,13 +15,26 @@
       </ion-col>
       <ion-col size="1">
         <ion-fab>
-          <ion-fab-button (click)="setOpen(true)">
+          <ion-fab-button (click)="openToAddProduct()">
             <ion-icon name="add"></ion-icon>
           </ion-fab-button>
         </ion-fab>
       </ion-col>
-
     </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <div class="divContenido" id="divContenidoHeader">
+            <p class="pContenidoHijo">SKU</p>
+            <p class="pContenidoHijo">NOMBRE</p>
+            <p class="pContenidoHijo">PRECIO</p>
+            <p class="pContenidoHijo">STOCK</p>
+          </div>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
     <ion-row>
       <ion-col size="12">
         <ion-list #lisliding>
@@ -35,13 +48,19 @@
                 </ion-col>
                 <p class="pContenidoHijo">{{item.sku}}</p>
                 <p class="pContenidoHijo">{{item.name}}</p>
-                <p class="pContenidoHijo">{{item.price}}</p>
+                <p class="pContenidoHijo">${{item.price}}</p>
                 <p class="pContenidoHijo">{{item.stock}}</p>
               </div>
             </ion-item>
-              <ion-item-options side="end">
-                  <ion-item-option color="success" expandable>
-                      <ion-icon name="checkmark" ></ion-icon>
+            <ion-item-options side="start" expandable (ionSwipe)="updateProduct(item)">
+              <ion-item-option color="primary" expandable (click)="updateProduct(item)">
+                  <ion-icon name="create-outline" ></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+
+              <ion-item-options side="end" expandable (ionSwipe)="deleteProduct(item)">
+                  <ion-item-option color="danger" expandable (click)="deleteProduct(item)">
+                      <ion-icon name="trash" ></ion-icon>
                   </ion-item-option>
               </ion-item-options>
           </ion-item-sliding>
@@ -56,7 +75,7 @@
           <ion-toolbar>
             <ion-title>Agregar Producto</ion-title>
             <ion-buttons slot="end">
-              <ion-button (click)="setOpen(false)">Cancelar</ion-button>
+              <ion-button (click)="closeAddModal()">Cancelar</ion-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-header>
@@ -76,29 +95,63 @@
             <ion-list>
               <ion-item>
                 <ion-input type="text" placeholder="SKU" formControlName="sku"></ion-input>
+                <ng-container *ngFor="let val of validationMessages['sku']">
+                  <div class="error-message" *ngIf="formProducto.get('sku')?.hasError(val.type)&&formProducto.get('sku')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
               </ion-item>
+              
               <ion-item>
                 <ion-input type="text" placeholder="NOMBRE" formControlName="name"></ion-input>
+                <ng-container *ngFor="let val of validationMessages['name']">
+                  <div class="error-message" *ngIf="formProducto.get('name')?.hasError(val.type)&&formProducto.get('name')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
               </ion-item>
+
               <ion-item>
                 <ion-input type="text" placeholder="DESCRIPCION" formControlName="description"></ion-input>
               </ion-item>
+
               <ion-item>
                 <ion-input type="number" placeholder="PRECIO" formControlName="price"></ion-input>
+                <ng-container *ngFor="let val of validationMessages['price']">
+                  <div class="error-message" *ngIf="formProducto.get('price')?.hasError(val.type)&&formProducto.get('price')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
               </ion-item>
+
               <ion-item>
                 <ion-select interface="popover" placeholder="Selecciona una categoria" formControlName="category">
                     <ion-select-option *ngFor="let cat of categorias" [value]="cat">{{cat.idCategoryBK}}</ion-select-option>
                 </ion-select>
+                <ng-container *ngFor="let val of validationMessages['category']">
+                  <div class="error-message" *ngIf="formProducto.get('category')?.hasError(val.type)&&formProducto.get('category')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
               </ion-item>
+
               <ion-item>
                 <ion-input type="number" placeholder="STOCK" formControlName="stock"></ion-input>
+                <ng-container *ngFor="let val of validationMessages['stock']">
+                  <div class="error-message" *ngIf="formProducto.get('stock')?.hasError(val.type)&&formProducto.get('stock')?.touched">
+                    {{val.message}}
+                  </div>
+                </ng-container>
               </ion-item>
               <ion-item>
                 <ion-input type="text" placeholder="URL PHOTO" formControlName="photo"></ion-input>
               </ion-item>
             </ion-list>
-            <ion-button color="success" expand="full"  (click)="newProduct()">
+            <!--
+              true-  agregar
+              false- update
+            -->
+            <ion-button color="success" expand="full" [disabled]="!formProducto.valid" (click)="newProduct()"> 
               ACEPTAR
             </ion-button>            
           </form>

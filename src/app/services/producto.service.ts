@@ -9,6 +9,7 @@ import { CategoryService } from './category.service';
 })
 export class ProductoService {
 
+  public delOrUpd = 1;
   private productos: Producto[] = [];
 
   private cat: Category[] = [];
@@ -25,7 +26,7 @@ export class ProductoService {
       //calification:
       //discant:
       stock: 10,
-      photo: 'https://picsum.photos/200'
+      photo: 'https://picsum.photos/id/2/200/300'
     },{
       sku: '2',
       name: 'Mandala Spiderman XL',
@@ -34,16 +35,16 @@ export class ProductoService {
       category: this.cat[1],
       //calification:
       stock: 3,
-      photo: 'https://picsum.photos/200'
+      photo: 'https://picsum.photos/id/3/200/300'
     },{
-      sku: '2',
+      sku: '3',
       name: 'Atrapa sueños Trailero',
       description: 'Atrapa sueños con diseño colorido, resalta sus hermosos colores bajo los influjos de sustancias psicoactivas.',
       price: 999,
       category: this.cat[0],
       //calification:
       stock: 18,
-      photo: 'https://picsum.photos/200'
+      photo: 'https://picsum.photos/id/4/200/300'
     });
   }
 
@@ -55,11 +56,16 @@ export class ProductoService {
     return this.productos.filter( prod => {prod.category?.idCategoryOK == idCategoriaOk});
   }
 
-  public deleteProducto(pos: number) {
+  public deleteProducto(prod: Producto): Producto[] {
+    const pos = this.productos.findIndex( 
+      (p) =>  p.sku == prod.sku
+    );
     this.productos.splice(pos,1);
+    return this.productos;
   }
 
-  public uploadProduct(prod:Producto, pos:number) {
+  public uploadProduct(prod: Producto) {
+    const pos = this.productos.findIndex( (_prod) => _prod.sku == prod.sku);
     this.productos[pos] = prod;
   }
 
