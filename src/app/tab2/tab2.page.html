@@ -7,11 +7,56 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-grid fixed>
+  <ion-row>
+    <ion-col size="8">
+      <ion-searchbar placeholder="Buscar por:" (ionChange)="filterProduct($event)" #ionBusqueda></ion-searchbar>
+    </ion-col>
+    <!--<ion-col size="4">
+      <ion-select value="sku" interface="popover" placeholder="Filtrar por:">
+        <ion-select-option value="sku">Nombre</ion-select-option>
+        <ion-select-option value="name">Nombre</ion-select-option>
+        <ion-select-option value="category">Categoria</ion-select-option>
+      </ion-select>
+    </ion-col>-->
+  </ion-row>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="4" *ngFor="let prod of fProductos">
+        <ion-card (click)="desplegarProducto(prod.sku)">
+          <img alt="{{prod.name}}" src="{{prod.photo}}" width="420" height="420"/>
+          <ion-card-header>
+            <ion-card-title>{{prod.name}}</ion-card-title>
+            <ion-card-subtitle color="success">${{prod.price}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid fixed>
+              <ion-row>
+
+              </ion-row>
+            </ion-grid>
+            <ion-grid fixed>
+              <ion-row>
+                <ion-col size="8">
+                  <ion-chip [color]="getColor(prod.category.idCategoryBK)" outline="true">
+                    <ion-label class="prod-categoria">{{prod.category.idCategoryBK}}</ion-label>
+                  </ion-chip>
+                </ion-col>
+                <ion-col size="4">
+                  <ion-chip [color]="getColorStock(prod.stock)">
+                    <label >STOCK</label>
+                  </ion-chip>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      
+    </ion-row>
+  </ion-grid>
+
+
+</ion-grid>
 </ion-content>

@@ -10,4 +10,5 @@ export interface Producto {
     calification?: Calification[];
     stock: number;
     photo?: string;
+    promCal?: number;
 }

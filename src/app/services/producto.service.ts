@@ -22,11 +22,12 @@ export class ProductoService {
       name: 'Ojo de Dios Shaquira CH',
       description: 'Ojo de Dios hecho con shaquiras de colores de tamaño chico',
       price: 1200,
-      category: this.cat[0],
+      category: this.cat[2],
       //calification:
       //discant:
       stock: 10,
-      photo: 'https://picsum.photos/id/2/200/300'
+      photo: 'https://picsum.photos/id/2/200/300',
+      promCal: 4
     },{
       sku: '2',
       name: 'Mandala Spiderman XL',
@@ -35,7 +36,8 @@ export class ProductoService {
       category: this.cat[1],
       //calification:
       stock: 3,
-      photo: 'https://picsum.photos/id/3/200/300'
+      photo: 'https://picsum.photos/id/3/200/300',
+      promCal: 2
     },{
       sku: '3',
       name: 'Atrapa sueños Trailero',
@@ -44,7 +46,8 @@ export class ProductoService {
       category: this.cat[0],
       //calification:
       stock: 18,
-      photo: 'https://picsum.photos/id/4/200/300'
+      photo: 'https://picsum.photos/id/4/200/300',
+      promCal: 5
     });
   }
 

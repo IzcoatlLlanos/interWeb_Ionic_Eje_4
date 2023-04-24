@@ -50,7 +50,8 @@ export class Tab1Page {
         category:["",Validators.required],
         calification:[""],
         stock:["",Validators.compose([Validators.required,Validators.min(0)])],
-        photo:[""],    
+        photo:[""],
+        promCal:[""]   
       });
 
       this.validationMessages = {
